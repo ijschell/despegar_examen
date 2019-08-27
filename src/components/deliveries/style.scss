@@ -1,0 +1,11 @@
+.contentDeliveries{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: wrap;
+    .box{
+        width: calc((100% - 80px) / 4);
+        margin: 10px;
+    }
+}

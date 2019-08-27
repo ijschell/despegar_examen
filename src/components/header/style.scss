@@ -1,0 +1,17 @@
+@import '../../vars.scss';
+
+header{
+    background: $blueDark;
+    padding: 10px 0;
+    h1{
+        color: #fff;
+        font-weight: 400;
+        margin: 0;
+        display: inline-block;
+    }
+    .right{
+        display: inline-block;
+        float: right;
+        padding: 3px 0;
+    }
+}
