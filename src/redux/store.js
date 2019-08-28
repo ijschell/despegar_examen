@@ -1,5 +1,13 @@
 import { createStore } from 'redux'
+import { deliveries } from './reducers'
 
-export const store = createStore(() => {}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const initialState = {
+    deliveriesShow : []
+};
+
+export const store = createStore(
+    deliveries, 
+    initialState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store
