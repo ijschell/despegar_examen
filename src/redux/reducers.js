@@ -1,9 +1,16 @@
 export const deliveries = (state, action) => {
 
     switch (action.type) {
+        
+        case 'init_deliveries':
+
+            return {...state, allDeliveries : action.value}
+
+        break;
+
         case 'change_deliveries':
 
-            var deliveriesFiltered = JSON.parse(sessionStorage.getItem('allDeliveries'));
+            var deliveriesFiltered = state.allDeliveries;
 
             if(action.where === 'name' || action.where === 'description'){
 
@@ -28,6 +35,7 @@ export const deliveries = (state, action) => {
             return {...state, deliveriesShow : deliveriesFiltered}
 
         break;
+
     }    
 
     return state;

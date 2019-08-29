@@ -2,6 +2,7 @@ import { createStore } from 'redux'
 import { deliveries } from './reducers'
 
 const initialState = {
+    allDeliveries : [],
     deliveriesShow : []
 };
 
