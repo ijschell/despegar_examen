@@ -67,11 +67,13 @@ const mapDispatchToProps = dispatch => (
   {
       
       initiDeliveries : (data) => dispatch({
+          component : 'deliveries',
           type : 'init_deliveries',
           value : data
       }),
 
       dispatch_change_deliveries : (where, value) => dispatch({
+          component : 'deliveries',
           type : 'change_deliveries',
           where : where,
           value : value

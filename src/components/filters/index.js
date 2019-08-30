@@ -52,6 +52,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => (
     {
         dispatch_change_deliveries : (where, value) => dispatch({
+            component : 'deliveries',
             type : 'change_deliveries',
             where : where,
             value : value

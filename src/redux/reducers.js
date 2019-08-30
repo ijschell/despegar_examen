@@ -1,5 +1,20 @@
-export const deliveries = (state, action) => {
+export const reducers = (state, action) => {
 
+    if(action.component === 'deliveries'){
+
+        state = handleDeliveries(state, action)
+
+    }else if(action.component === 'navigation'){
+
+        state = handleNavigation(state, action)
+
+    }
+
+    return state;
+
+}
+
+const handleDeliveries = (state, action) => {
     switch (action.type) {
         
         case 'init_deliveries':
@@ -36,8 +51,11 @@ export const deliveries = (state, action) => {
 
         break;
 
-    }    
+    }
+}
 
-    return state;
+const handleNavigation = (state, action) => {
+
+    return {...state, navigation : action.state}
 
 }

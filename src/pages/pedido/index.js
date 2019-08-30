@@ -6,9 +6,11 @@ export class Pedido extends Component {
 
     constructor(props) {
         super(props)
-    
+        // this.activateCategory = this.activateCategory.bind(this);
         this.state = {
             data : null,
+            catActive : 0,
+            productsRender : null,
             ready : false
         }
     }
@@ -31,10 +33,20 @@ export class Pedido extends Component {
         
         this.setState({            
             data : localSelected,
+            productsRender : localSelected[0].food[0].menu,
             ready : true
         })
 
-    }    
+    }
+
+    activateCategory(e, k){
+
+        this.setState({
+            catActive : k,
+            productsRender : this.state.data[0].food[k].menu
+        })
+
+    }
 
     render() {
 
@@ -44,12 +56,62 @@ export class Pedido extends Component {
             const local = this.state.data[0];
 
             return (
-                <div>
+                <div id="contentProducts">
                     
                     <h2>Realiza tu pedido en {local.name}!</h2>
 
                     <div className="description">
                         {local.name} le ofrece {local.description}
+                    </div>
+
+                    <div className="left">
+                        
+                        <div className="cats">
+                            <ul>
+                                {
+                                    // print list of categories
+                                    local.food.map((v, k) => {
+                                        var active = '';
+                                        if(k===this.state.catActive){
+                                            active = 'active';
+                                        }
+                                        return (
+                                            <li key={k} className={active} onClick={(e) => this.activateCategory(e, k)}>{v.cat}</li>    
+                                        )
+
+                                    })
+                                }
+                            </ul>
+                        </div>
+                        <div className="products">
+                            <ul>
+                                {
+                                    this.state.productsRender.map((v,k) => {
+
+                                        var style = {
+                                            backgroundImage : 'url('+v.image+')'
+                                        }
+
+                                        return (
+                                            <li key={k}>
+                                                <span className="img" style={style}></span>
+                                                <span className="name">{v.name}</span>
+                                                <span className="price">${v.price}</span>
+                                                <span className="action">
+                                                    <a href="#" className="lupa"><i class="fas fa-search"></i></a>
+                                                    <a href="#" className="addToCart"><i class="fas fa-cart-plus"></i></a>
+                                                </span>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div className="right">
+                        CARRITO
                     </div>
 
                 </div>
