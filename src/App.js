@@ -24,6 +24,7 @@ export class App extends Component {
         this.props.initiDeliveries(data['deliveries']);
 
         // init render in this component
+        console.log(data['deliveries']);        
         this.props.dispatch_change_deliveries('init', data['deliveries'])
 
         this.setState({

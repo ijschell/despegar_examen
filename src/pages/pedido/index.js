@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Tippy from '@tippy.js/react'
+import Cart from '../../components/cart'
 import './style.scss'
 
 export class Pedido extends Component {
 
     constructor(props) {
         super(props)
-        // this.activateCategory = this.activateCategory.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+        this.printLinkToAdd = this.printLinkToAdd.bind(this);
         this.state = {
             data : null,
             catActive : 0,
@@ -48,12 +51,48 @@ export class Pedido extends Component {
 
     }
 
+    addToCart(ID){
+
+        // get product of state
+        const productSelected = this.state.productsRender.filter(item => {
+            if(item.id === ID){
+                return item;
+            }
+        })
+
+        // add local in product
+        let toUpdate = {
+            local : this.state.data[0].name,
+            cant : 1
+        }
+        const mergedProduct = {...productSelected[0], ...toUpdate}
+
+        this.props.add_to_cart(mergedProduct)
+
+        // set selected producto in all products
+        this.props.set_selected_prod(toUpdate.local, ID)
+
+        return false;
+
+    }
+
+    printLinkToAdd(isSelected, id){
+        if(!isSelected){
+            return (<span className="addToCart" onClick={e => (this.addToCart(id))}><i className="fas fa-cart-plus"></i></span>)
+        }else{
+            return (<span className="addToCart"><i className="fas fa-cart-plus"></i></span>)
+        }
+    }
+
     render() {
+
+        console.log(this.props);        
 
         if(this.state.ready){
             
-            console.log(this.state.data);
+            // console.log(this.state.data);
             const local = this.state.data[0];
+            console.log(local);
 
             return (
                 <div id="contentProducts">
@@ -92,14 +131,22 @@ export class Pedido extends Component {
                                             backgroundImage : 'url('+v.image+')'
                                         }
 
+                                        let selected = '';
+
+                                        if(v.selected){
+                                            selected = 'selected'
+                                        }
+
                                         return (
-                                            <li key={k}>
+                                            <li key={k} className={selected}>
                                                 <span className="img" style={style}></span>
                                                 <span className="name">{v.name}</span>
                                                 <span className="price">${v.price}</span>
                                                 <span className="action">
-                                                    <a href="#" className="lupa"><i class="fas fa-search"></i></a>
-                                                    <a href="#" className="addToCart"><i class="fas fa-cart-plus"></i></a>
+                                                    <Tippy content={v.description}>
+                                                        <span className="lupa"><i className="fas fa-search"></i></span>
+                                                    </Tippy>
+                                                    {this.printLinkToAdd(selected, v.id)}
                                                 </span>
                                             </li>
                                         )
@@ -111,7 +158,7 @@ export class Pedido extends Component {
                     </div>
 
                     <div className="right">
-                        CARRITO
+                        <Cart></Cart>
                     </div>
 
                 </div>
@@ -128,8 +175,21 @@ const mapStateToProps = (state) => ({
     allDeliveries : state.allDeliveries
 })
 
-const mapDispatchToProps = {
-    
-}
+const mapDispatchToProps = dispatch => (
+    {
+        add_to_cart : (product) => dispatch({
+            component : 'cart',
+            type : 'add_to_cart',
+            value : product
+        }),
+        set_selected_prod : (local, id) => dispatch({
+            component : 'deliveries',
+            type : 'set_selected_prod',
+            local,
+            id,
+            selected : true
+        })
+    }
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pedido)

@@ -8,6 +8,10 @@ export const reducers = (state, action) => {
 
         state = handleNavigation(state, action)
 
+    }else if(action.component === 'cart'){
+
+        state = handleCart(state, action)
+
     }
 
     return state;
@@ -50,6 +54,31 @@ const handleDeliveries = (state, action) => {
             return {...state, deliveriesShow : deliveriesFiltered}
 
         break;
+        case 'set_selected_prod':
+
+            const local = action.local;
+            const ID = parseInt(action.id);
+            const selected = action.selected;
+
+            return {
+                ...state,
+                allDeliveries : state.allDeliveries.map(delivery => {
+                    if(delivery.name === local){
+                        delivery.food.map(category => {
+                            category.menu.map(food => {
+                                if(food.id === ID){
+                                    food.selected = selected;
+                                }
+                                return food;
+                            })
+                            return category;
+                        })
+                    }
+                    return delivery;
+                })
+            }
+
+        break;
 
     }
 }
@@ -57,5 +86,48 @@ const handleDeliveries = (state, action) => {
 const handleNavigation = (state, action) => {
 
     return {...state, navigation : action.state}
+
+}
+
+const handleCart = (state, action) => {
+
+    switch (action.type) {
+        case 'add_to_cart':
+            
+            return {
+                ...state,
+                cart : state.cart.concat(action.value)
+            }
+
+        break;
+        case 'add_cant_to_item':
+
+            return {
+                ...state,
+                cart : state.cart.map(v => {
+                    if(parseInt(action.id) === v.id && v.local === action.local){
+                        v.cant = parseInt(action.cant)
+                    }
+                    return v
+                })
+            }
+
+        break;
+        case 'remove_product_of_cart':
+            
+            const local = action.local;
+            const ID = parseInt(action.id);
+
+            return {
+                ...state,
+                cart : state.cart.filter(item => {
+                    if(item.local !== local || item.id !== ID){
+                        return item;
+                    }
+                })
+            }
+
+        break;
+    }
 
 }

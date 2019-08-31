@@ -34,8 +34,6 @@ export class Navigation extends Component {
 
     render() {
 
-        console.log(this.props.navigation);
-
         const navigation = this.props.navigation;
 
         return (

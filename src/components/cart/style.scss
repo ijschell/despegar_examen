@@ -1,0 +1,118 @@
+@import '../../vars.scss';
+
+#containerCart{
+    font-size: 11px;
+    padding: 3px;
+    background: #eee;
+    border: solid 1px #ccc;
+    > div{
+        display: table;
+        width: calc(100% - 6px);
+        border-top: none;
+        > div{
+            display: table-cell;
+            &:nth-child(1){
+                width: 35%;
+                text-align: left;
+            }
+            &:nth-child(2){
+                width: 15%;
+            }
+            &:nth-child(3){
+                width: 15%;
+            }
+            &:nth-child(4){
+                width: 15%;
+            }
+        }
+    }
+    .header{
+        background: $blueDark;
+        color: #fff;
+        padding: 0 3px;
+        text-align: center;
+        &:nth-child(odd){
+            background: $blueDark;
+        }
+        &:nth-child(even){
+            background: $blueDark;   
+        }
+        > div{
+            border-right: solid 1px #fff;
+            padding: 3px 0;
+            &:last-child{
+                border: none;
+            }
+        }
+    }
+    .body{
+        // padding: 3px;
+        .tr{
+            width: 100%;
+            display: table;
+            padding: 0 3px;
+            &:nth-child(odd){
+                background: rgb(202, 202, 202);
+            }
+            &:nth-child(even){
+                background: #fff;   
+            }
+            > div{
+                display: table-cell;
+                text-align: center;
+                border-right: solid 1px #b7b7b7;
+                &:nth-child(1){
+                    width: 35%;
+                    text-align: left;
+                }
+                &:nth-child(2){
+                    width: 15%;
+                }
+                &:nth-child(3){
+                    width: 15%;
+                }
+                &:nth-child(4){
+                    width: 15%;
+                }
+                &:last-child{
+                    border: none;
+                }
+                input{
+                    width: 40px;
+                }
+                span.remove{
+                    display: inline-block;
+                    color: #fff;
+                    padding: 5px 7px;
+                    border-radius: 4px;
+                    margin: 2px;
+                    font-size: 10px;
+                    cursor: pointer;
+                    background: #c11212;
+                }
+            }
+        }
+    }
+    .footer{
+        border: none;
+        padding: 3px;
+        text-align: right;
+        > div{
+            padding: 3px;
+            text-align: center !important;
+            &:nth-child(1){
+                width: 35%;
+                text-align: left;
+            }
+            &:nth-child(2){
+                width: 15%;
+            }
+            &:nth-child(3){
+                width: 15%;
+            }
+            &:nth-child(4){
+                width: 15%;
+            }
+        }
+    }
+}

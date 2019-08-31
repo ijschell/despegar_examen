@@ -82,19 +82,27 @@
                     }
                     span.action{
                         width: 50px;
-                        a{
+                        span{
                             display: inline-block;
                             color: #fff;
                             padding: 5px;
                             border-radius: 4px;
                             margin: 2px;
                             font-size: 10px;
+                            cursor: pointer;
                             &.lupa{
                                 background: blue;
+                                cursor: initial;
                             }
                             &.addToCart{
                                 background: $green;
                             }
+                        }
+                    }
+                    &.selected{
+                        opacity: 0.3;
+                        span.addToCart{
+                            cursor: initial;
                         }
                     }
                 }

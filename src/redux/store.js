@@ -23,7 +23,8 @@ const initialState = {
             enable : false,
             baseUrl : '/checkout/'
         }
-    }
+    },
+    cart : []
 };
 
 export const store = createStore(
