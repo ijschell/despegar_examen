@@ -5,47 +5,113 @@ import './style.scss'
 
 export class Navigation extends Component {
 
-    constructor(props) {
-        super(props)
-    }
-
-    isActive(item){
-
-        if(item.active){
-            return 'active';
-        }else{
-            return '';
+    constructor() {
+        super()
+        this.isEnable = this.isEnable.bind(this);
+        this.setActive = this.setActive.bind(this);
+        this.printLink = this.printLink.bind(this);
+        this.state = {
+            navigationClass : {
+                one : 'active',
+                two : '',
+                three : ''
+            },
+            navigationEnable : {
+                one : false,
+                two : false,
+                three : false
+            }
         }
-
     }
 
-    canPress(item){
+    componentDidMount() {
         
-        if(item.enable){
-            // if can print link, I will get from store the ID of local and print the link
-            return (
-                <Link to={item.baseUrl}>{item.text}</Link>
-            )
-        }else{
-            return item.text
+        const pathname = window.location.pathname;
+
+        if(pathname === '/'){
+            this.setActive('one');
+        }else if(pathname.search('/pedido') !== -1){
+            this.setActive('two');
+        }else if(pathname === '/checkout'){
+            this.setActive('three');
+        }
+
+        this.isEnable();
+
+    }
+
+    isEnable(){
+
+        console.log(this.props.cart);            
+        if(this.props.cart.length > 0){
+            this.setState(state => ({
+                navigationEnable : {
+                    ...state.navigationEnable,
+                    one : true,
+                    two : true,
+                    three : true
+                }
+            })) 
         }
 
     }
 
+    printLink(item){
+
+        switch (item) {
+            case 'one':
+                if(this.state.navigationEnable.one){
+                    return (<Link to="/">1 - Elegi tu delivery</Link>)
+                }else{
+                    return ('1 - Elegi tu delivery')
+                }
+            break;
+            case 'two':
+                if(this.state.navigationEnable.two){
+                    return (<Link to={`/pedido/${this.props.lastLocal}`}>2 - Realiza tu pedido</Link>)
+                }else{
+                    return ('2 - Realiza tu pedido') 
+                }
+            break;
+            case 'three':
+                if(this.state.navigationEnable.three){
+                    return (<Link to="/checkout">3 - Completa tus datos</Link>)
+                }else{
+                    return ('3 - Completa tus datos') 
+                }
+            break;
+        }
+
+    }
+
+    setActive(item){
+
+        this.setState(state => ({
+            navigationClass : {
+                ...state.navigationClass,
+                one : '',
+                two : '',
+                three : '',
+                [item] : 'active'
+            }
+        }))
+
+    }
+    
     render() {
 
-        const navigation = this.props.navigation;
+        const navigationClass = this.state.navigationClass;
 
         return (
             <ul id="navigation">
-                <li className={this.isActive(navigation.item1)}>
-                    {this.canPress(navigation.item1)}
+                <li className={navigationClass.one}>
+                    {this.printLink('one')}
                 </li>
-                <li className={this.isActive(navigation.item2)}>
-                    {this.canPress(navigation.item2)}
+                <li className={navigationClass.two}>
+                    {this.printLink('two')}
                 </li>
-                <li className={this.isActive(navigation.item3)}>
-                    {this.canPress(navigation.item3)}
+                <li className={navigationClass.three}>
+                    {this.printLink('three')}
                 </li>
             </ul>
         )
@@ -53,7 +119,8 @@ export class Navigation extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    navigation : state.navigation
+    cart : state.cart,
+    lastLocal : state.lastLocal
 })
 
 const mapDispatchToProps = dispatch => (

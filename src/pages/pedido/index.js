@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from "react-router-dom";
+import Header from '../../components/header'
 import Tippy from '@tippy.js/react'
 import Cart from '../../components/cart'
 import './style.scss'
@@ -10,6 +12,7 @@ export class Pedido extends Component {
         super(props)
         this.addToCart = this.addToCart.bind(this);
         this.printLinkToAdd = this.printLinkToAdd.bind(this);
+        this.printCheckoutButton = this.printCheckoutButton.bind(this);
         this.state = {
             data : null,
             catActive : 0,
@@ -39,6 +42,9 @@ export class Pedido extends Component {
             productsRender : localSelected[0].food[0].menu,
             ready : true
         })
+
+        // set last local visit in store
+        this.props.set_last_local(ID)
 
     }
 
@@ -84,83 +90,101 @@ export class Pedido extends Component {
         }
     }
 
-    render() {
+    printCheckoutButton(){
 
-        console.log(this.props);        
+        if(this.props.cart.length > 0){
+            return (<Link to="/checkout">Realizar pedido</Link>)
+        }else{
+            return (<span className="disabled">Realizar pedido</span>)
+        }
+
+    }
+
+    render() {
 
         if(this.state.ready){
             
-            // console.log(this.state.data);
             const local = this.state.data[0];
-            console.log(local);
 
             return (
-                <div id="contentProducts">
-                    
-                    <h2>Realiza tu pedido en {local.name}!</h2>
-
-                    <div className="description">
-                        {local.name} le ofrece {local.description}
-                    </div>
-
-                    <div className="left">
+                <div>
+                    <Header></Header>
+                    <div className="wrapper">
+                        <div id="contentProducts">
                         
-                        <div className="cats">
-                            <ul>
-                                {
-                                    // print list of categories
-                                    local.food.map((v, k) => {
-                                        var active = '';
-                                        if(k===this.state.catActive){
-                                            active = 'active';
-                                        }
-                                        return (
-                                            <li key={k} className={active} onClick={(e) => this.activateCategory(e, k)}>{v.cat}</li>    
-                                        )
+                            <h2>Realiza tu pedido en {local.name}!</h2>
 
-                                    })
-                                }
-                            </ul>
+                            <div className="description">
+                                {local.name} le ofrece {local.description}
+                            </div>
+
+                            <div className="left">
+                                
+                                <div className="cats">
+                                    <ul>
+                                        {
+                                            // print list of categories
+                                            local.food.map((v, k) => {
+                                                var active = '';
+                                                if(k===this.state.catActive){
+                                                    active = 'active';
+                                                }
+                                                return (
+                                                    <li key={k} className={active} onClick={(e) => this.activateCategory(e, k)}>{v.cat}</li>    
+                                                )
+
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                                <div className="products">
+                                    <ul>
+                                        {
+                                            this.state.productsRender.map((v,k) => {
+
+                                                var style = {
+                                                    backgroundImage : 'url('+v.image+')'
+                                                }
+
+                                                let selected = '';
+
+                                                if(v.selected){
+                                                    selected = 'selected'
+                                                }
+
+                                                return (
+                                                    <li key={k} className={selected}>
+                                                        <span className="img" style={style}></span>
+                                                        <span className="name">{v.name}</span>
+                                                        <span className="price">${v.price}</span>
+                                                        <span className="action">
+                                                            <Tippy content={v.description}>
+                                                                <span className="lupa"><i className="fas fa-search"></i></span>
+                                                            </Tippy>
+                                                            {this.printLinkToAdd(selected, v.id)}
+                                                        </span>
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div className="right">
+                                <Cart></Cart>
+                            </div>
+
+                            <div className="buttons">
+                                <div>
+                                    <Link to="/">Atrás</Link>
+                                    {this.printCheckoutButton()}
+                                </div>
+                            </div>
+
                         </div>
-                        <div className="products">
-                            <ul>
-                                {
-                                    this.state.productsRender.map((v,k) => {
-
-                                        var style = {
-                                            backgroundImage : 'url('+v.image+')'
-                                        }
-
-                                        let selected = '';
-
-                                        if(v.selected){
-                                            selected = 'selected'
-                                        }
-
-                                        return (
-                                            <li key={k} className={selected}>
-                                                <span className="img" style={style}></span>
-                                                <span className="name">{v.name}</span>
-                                                <span className="price">${v.price}</span>
-                                                <span className="action">
-                                                    <Tippy content={v.description}>
-                                                        <span className="lupa"><i className="fas fa-search"></i></span>
-                                                    </Tippy>
-                                                    {this.printLinkToAdd(selected, v.id)}
-                                                </span>
-                                            </li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
-
                     </div>
-
-                    <div className="right">
-                        <Cart></Cart>
-                    </div>
-
                 </div>
             )
 
@@ -172,7 +196,8 @@ export class Pedido extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    allDeliveries : state.allDeliveries
+    allDeliveries : state.allDeliveries,
+    cart : state.cart
 })
 
 const mapDispatchToProps = dispatch => (
@@ -188,6 +213,11 @@ const mapDispatchToProps = dispatch => (
             local,
             id,
             selected : true
+        }),
+        set_last_local : (id) => dispatch({
+            component : 'deliveries',
+            type : 'set_last_local',
+            id,
         })
     }
 )

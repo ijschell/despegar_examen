@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './App.scss';
 import deliveries from './services/deliveries'
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import Header from './components/header';
 import Home from './pages/home';
 import Pedido from './pages/pedido'
@@ -15,7 +15,7 @@ export class App extends Component {
     this.state = {
       ready : false
     }
-  }
+  }  
 
   componentDidMount(){
           
@@ -41,13 +41,10 @@ export class App extends Component {
 
       return (
         <Router>
-          <div className="App">
-            <Header></Header>
-            <div className="wrapper">
-              <Route path="/" exact component={Home} />
-              <Route path="/pedido/:ID" exact component={Pedido} />
-              <Route path="/checkout" exact component={Checkout} />
-            </div>
+          <div className="App">            
+            <Route path="/" exact component={Home} />
+            <Route path="/pedido/:ID" exact component={Pedido} />
+            <Route path="/checkout" exact component={Checkout} />
           </div>
         </Router>
       );
@@ -83,5 +80,5 @@ const mapDispatchToProps = dispatch => (
   }
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
 

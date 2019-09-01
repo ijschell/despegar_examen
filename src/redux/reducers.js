@@ -4,10 +4,6 @@ export const reducers = (state, action) => {
 
         state = handleDeliveries(state, action)
 
-    }else if(action.component === 'navigation'){
-
-        state = handleNavigation(state, action)
-
     }else if(action.component === 'cart'){
 
         state = handleCart(state, action)
@@ -80,13 +76,16 @@ const handleDeliveries = (state, action) => {
 
         break;
 
+        case 'set_last_local':
+
+            return {
+                ...state,
+                lastLocal : action.id
+            }
+
+        break;
+
     }
-}
-
-const handleNavigation = (state, action) => {
-
-    return {...state, navigation : action.state}
-
 }
 
 const handleCart = (state, action) => {

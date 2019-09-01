@@ -3,7 +3,8 @@
 #contentProducts{
     .left{
         padding-top: 50px;
-        display: inline-block;
+        display: block;
+        float: left;
         width: calc(50% - 15px);
         .cats{
             width: 100px;
@@ -111,7 +112,30 @@
     }
     .right{
         padding-top: 50px;
-        display: inline-block;
+        display: block;
+        float: right;
         width: calc(50% - 15px);
+    }
+    .buttons{
+        clear: both;
+        padding-top: 50px;
+        > div{
+            float: right;
+            a, span{
+                display: inline-block;
+                padding: 5px 7px;
+                color: #fff;
+                background: $blueDark;
+                border-radius: 4px;
+                margin: 3px;
+                font-size: 13px;
+                text-decoration: none;
+                cursor: pointer;
+                &.disabled{
+                    opacity: 0.5;
+                    cursor: initial;
+                }
+            }
+        }
     }
 }

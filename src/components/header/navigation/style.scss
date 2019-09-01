@@ -11,9 +11,16 @@ ul#navigation{
         list-style: none;
         border: solid 1px rgba(0,0,0,0.1);
         border-left: solid 1px rgba(0,0,0,0.1);
+        a{
+            color: #fff;
+            text-decoration: none;
+        }
         &.active{
             background: #fff;
             color: #333;
+            a{
+                color: #333;
+            }
         }
         &:first-child{
             border-top-left-radius: 4px;
