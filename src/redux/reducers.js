@@ -50,6 +50,14 @@ const handleDeliveries = (state, action) => {
             return {...state, deliveriesShow : deliveriesFiltered}
 
         break;
+        case 'set_default_deliveries_show':
+
+            return {
+                ...state,
+                deliveriesShow : state.allDeliveries
+            }
+
+        break;
         case 'set_selected_prod':
 
             const local = action.local;
