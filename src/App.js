@@ -7,6 +7,7 @@ import Header from './components/header';
 import Home from './pages/home';
 import Pedido from './pages/pedido'
 import Checkout from './pages/checkout'
+import './loader.scss'
 
 export class App extends Component {
 
@@ -18,15 +19,16 @@ export class App extends Component {
   }  
 
   componentDidMount(){
-          
+
+    // get all deliveries from api
     deliveries.then(data => {
         // set all deliveries in store
         this.props.initiDeliveries(data['deliveries']);
 
-        // init render in this component
-        console.log(data['deliveries']);        
+        // init render in this component        
         this.props.dispatch_change_deliveries('init', data['deliveries'])
 
+        // set ready the app and disapear loader
         this.setState({
           ready : true
         })
@@ -51,7 +53,11 @@ export class App extends Component {
       
     }else{
 
-      return 'Loading...'
+      return (
+        <div id="contentLoader">
+          <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </div>
+      )
 
     }
   }

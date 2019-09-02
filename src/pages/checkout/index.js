@@ -46,6 +46,8 @@ export class Checkout extends Component {
 
     checkIfAllDataValues(){
 
+        // check if a value is empty
+        // return true if all values has text or false
         const obj = this.state.form;
 
         for (let i = 0; i < Object.keys(obj).length; i++) {
@@ -61,6 +63,7 @@ export class Checkout extends Component {
 
     printCheckoutButton(){
 
+        // if the cart is not empty and the form has all values, print the button to finish
         if(this.props.cart.length > 0 && this.checkIfAllDataValues()){
             return (<span onClick={this.printPopUpResult}>Realizar pedido</span>)
         }else{
@@ -74,11 +77,8 @@ export class Checkout extends Component {
 
     printPopUpResult(){
 
+        // the funcion set to show the popup and print the json result
         const cart = this.props.cart;
-
-        console.log(cart);        
-
-        console.log(JSON.stringify(cart));        
 
         this.setState({
             jsonResult : JSON.stringify(cart),
@@ -89,6 +89,7 @@ export class Checkout extends Component {
 
     showPop(){
 
+        // print popup if showPop is true
         if(this.state.showPop){
             return (
                 <div className="popUp">

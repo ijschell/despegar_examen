@@ -10,6 +10,7 @@ export class Navigation extends Component {
         this.isEnable = this.isEnable.bind(this);
         this.setActive = this.setActive.bind(this);
         this.printLink = this.printLink.bind(this);
+        this.checkPermissionToChargePage = this.checkPermissionToChargePage.bind(this);
         this.state = {
             navigationClass : {
                 one : 'active',
@@ -26,23 +27,31 @@ export class Navigation extends Component {
 
     componentDidMount() {
         
+        // get the pathname of location
         const pathname = window.location.pathname;
 
+        // check if can access to path
+        this.checkPermissionToChargePage(pathname)
+
         if(pathname === '/'){
+            // set active the first button
             this.setActive('one');
         }else if(pathname.search('/pedido') !== -1){
+            // set active the second button
             this.setActive('two');
         }else if(pathname === '/checkout'){
+            // set active the third button
             this.setActive('three');
         }
 
+        // check which buttons are enable to click
         this.isEnable();
 
     }
 
     isEnable(){
-
-        console.log(this.props.cart);            
+        
+        // if the cart is not empty, set the second and the third like to enable
         if(this.props.cart.length > 0){
             this.setState(state => ({
                 navigationEnable : {
@@ -58,6 +67,7 @@ export class Navigation extends Component {
 
     printLink(item){
 
+        // make the link button each item
         switch (item) {
             case 'one':
                 if(this.state.navigationEnable.one){
@@ -86,6 +96,7 @@ export class Navigation extends Component {
 
     setActive(item){
 
+        // reset all buttons and set to active the selected
         this.setState(state => ({
             navigationClass : {
                 ...state.navigationClass,
@@ -95,6 +106,18 @@ export class Navigation extends Component {
                 [item] : 'active'
             }
         }))
+
+    }
+
+    checkPermissionToChargePage(pathname){
+
+        // checkeo si el usuario llega directamente a este getEnabledCategories, si no tiene 
+        // productos cargados en el createBrotliCompress, lo envío a la home
+        if(pathname === '/checkout'){
+            if(this.props.cart.length === 0){
+                window.location.href = window.location.origin;
+            }
+        }
 
     }
     

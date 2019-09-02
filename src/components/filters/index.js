@@ -19,8 +19,10 @@ export class Filters extends Component {
             document.getElementById('name').value = '';
         }
 
+        // get value
         let name = e.target.value;
 
+        // dispatching if search by name or description and pass the value
         this.props.dispatch_change_deliveries(where, name);
 
     }

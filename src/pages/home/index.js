@@ -16,7 +16,9 @@ export class Home extends Component {
     }
 
     componentDidMount(){
+        // reset deliveries to init
         this.props.set_default_deliveries_show()
+
     }
 
     render() {

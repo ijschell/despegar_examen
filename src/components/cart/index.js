@@ -21,24 +21,31 @@ export class Cart extends Component {
         var cant = e.target.value;
 
         // update cant selected in store
+        // first check if the value is less to 0
+        if(cant < 0){
+            cant = 0
+        }        
         this.props.add_cant_to_item(local, id, cant)
 
     }
 
     calculatePriceIVA(price){
 
+        // add 22% to price
         return Math.round(price * 1.22)
 
     }
 
     calculateTotalPricePeritem(cant, price){
 
+        // calculate the total price to pay and multiplicate by cant of item
         return this.calculatePriceIVA(price) * cant;
 
     }
 
     calculateTotal(){
 
+        // this function calculate the total to pay for the client
         let total = 0
         
         this.props.cart.map(v => {

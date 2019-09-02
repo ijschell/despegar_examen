@@ -37,6 +37,7 @@ export class Pedido extends Component {
             }
         })
         
+        // set visible only the products that depend of the category
         this.setState({            
             data : localSelected,
             productsRender : localSelected[0].food[0].menu,
@@ -50,6 +51,7 @@ export class Pedido extends Component {
 
     activateCategory(e, k){
 
+        // set the category enabled and show the products 
         this.setState({
             catActive : k,
             productsRender : this.state.data[0].food[k].menu
@@ -77,8 +79,6 @@ export class Pedido extends Component {
 
         // set selected producto in all products
         this.props.set_selected_prod(toUpdate.local, ID)
-
-        return false;
 
     }
 
