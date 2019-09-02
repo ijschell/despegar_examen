@@ -119,8 +119,12 @@ export class Checkout extends Component {
                 <div className="wrapper">
                     <div id="containerCheckout">
                     
+                        <h2>Completa tus datos!</h2>
+
+                        <hr />
+
                         <div className="left">
-                            <h2>Completa tus datos!</h2>
+
                             <form>
                                 <div className="groupForm">
                                     <div>

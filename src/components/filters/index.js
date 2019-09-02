@@ -31,16 +31,24 @@ export class Filters extends Component {
         return (
             <div>
                 <h2>Filtros:</h2>
-                <small>Resultados encontrados: {this.props.deliveriesShow.length}</small>
                 <div className="form">
                     <div className="form-group">
-                        <label htmlFor="name">Nombre:</label>
-                        <input type="text" id="name" onKeyUp={(e) => {this.searchDelivery(e, 'name')}} />
+                        <div>
+                            <label htmlFor="name">Nombre:</label>
+                        </div>
+                        <div>
+                            <input type="text" id="name" onKeyUp={(e) => {this.searchDelivery(e, 'name')}} />
+                        </div>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="description">Descripción:</label>
-                        <input type="text" id="description" onKeyUp={(e) => {this.searchDelivery(e, 'description')}} />
+                        <div>
+                            <label htmlFor="description">Descripción:</label>
+                        </div>
+                        <div>
+                            <input type="text" id="description" onKeyUp={(e) => {this.searchDelivery(e, 'description')}} />
+                        </div>
                     </div>
+                    <small>Resultados encontrados: {this.props.deliveriesShow.length}</small>
                 </div>
             </div>
         )

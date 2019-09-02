@@ -27,6 +27,7 @@ export class Home extends Component {
                 <Header></Header>
                 <div className="wrapper">
                     <Filters></Filters>
+                    <hr />
                     <Deliveries></Deliveries>
                 </div>
             </div>

@@ -5,6 +5,7 @@
     padding: 3px;
     background: #eee;
     border: solid 1px #ccc;
+    background: #fff;
     > div{
         display: table;
         width: calc(100% - 6px);
@@ -97,9 +98,11 @@
         border: none;
         padding: 3px;
         text-align: right;
+        border-top: solid 1px #ccc;
         > div{
             padding: 3px;
             text-align: center !important;
+            font-weight: bold;
             &:nth-child(1){
                 width: 35%;
                 text-align: left;

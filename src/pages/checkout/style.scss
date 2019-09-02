@@ -2,12 +2,11 @@
 
 #containerCheckout{
     .left{
-        padding-top: 50px;
         display: block;
         float: left;
         width: calc(50% - 15px);
         form{
-            background: $grey;
+            background: #fff;
             padding: 20px;
             border: solid 1px #ccc;
             border-radius: 4px;
@@ -25,8 +24,8 @@
                         width: calc(100% - 80px);
                         input{
                             width: calc(100% - 10px);
-                            height: 30px;
-                            padding: 0 0 0 10px;
+                            // height: 30px;
+                            // padding: 0 0 0 10px;
                         }
                     }
                 }
@@ -38,7 +37,6 @@
         }
     }
     .right{
-        padding-top: 50px;
         display: block;
         float: right;
         width: calc(50% - 15px);

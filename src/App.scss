@@ -1,9 +1,25 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap';
+@import './vars.scss';
 body{
     font-family: 'Roboto', sans-serif;
+    background: $grey;
     .wrapper{
         width: 100%;
         max-width: 1000px;
         margin: auto;
+    }
+    h2{
+        color: #888;
+    }
+    input[type="text"]{
+        background: #fff;
+        border: solid 1px $violet;
+        border-radius: 4px;
+        height: 30px;
+        padding-left: 5px;
+    }
+    hr{
+        margin: 50px 0;
+        opacity: 0.5;
     }
 }

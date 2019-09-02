@@ -113,10 +113,12 @@ export class Pedido extends Component {
                         <div id="contentProducts">
                         
                             <h2>Realiza tu pedido en {local.name}!</h2>
-
+                            
                             <div className="description">
                                 {local.name} le ofrece {local.description}
                             </div>
+                            
+                            <hr />
 
                             <div className="left">
                                 
